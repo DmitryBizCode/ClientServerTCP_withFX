@@ -65,8 +65,9 @@ public class Server extends Application {
 
     private double performCalculation(double x, double y, double c) {
         double resault = 0;
-        for (int i = 1; i <= 30 ; i++)
+        for (int i = 1; i <= 30 ; i++) {
             resault += ((Math.pow(-i,i+1))*((Math.sin(x)*Math.cos(y)+Math.tan(c))/(Factorial(i+3))));
+        }
         return resault;
     }
 

@@ -39,30 +39,68 @@ public class Client extends Application {
     protected void calculate() {
         new Thread(() -> {
             try {
-                Socket socket = new Socket("localhost", 12345);
 
-                DataInputStream dis = new DataInputStream(socket.getInputStream());
-                DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                // Перевірка чи введені значення не порожні
+                String xInput = Xnum.getText();
+                String yInput = Ynum.getText();
+                String cInput = Cnum.getText();
 
-                double value1 = Double.parseDouble(Xnum.getText());
-                double value2 = Double.parseDouble(Ynum.getText());
-                double value3 = Double.parseDouble(Cnum.getText());
+                if (xInput.isEmpty() || yInput.isEmpty() || cInput.isEmpty()) {
+                    // Виведення попередження про порожні значення
+                    Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
+                    Platform.runLater(() -> {
+                        resultLabel.setText("Please enter valid numbers");
+                        Xnum.clear();
+                        Ynum.clear();
+                        Cnum.clear();
+                    });
+                    return; // Вихід з методу, оскільки дані некоректні
+                }
 
-                dos.writeDouble(value1);
-                dos.writeDouble(value2);
-                dos.writeDouble(value3);
+                // Перевірка чи введені значення є числами
+                try {
 
-                double result = dis.readDouble();
+                    double value1 = Double.parseDouble(xInput);
+                    double value2 = Double.parseDouble(yInput);
+                    double value3 = Double.parseDouble(cInput);
 
-                // Update the UI on the JavaFX Application Thread
-                Platform.runLater(() -> resultLabel.setText("Result: " + result));
+                    Socket socket = new Socket("localhost", 12345);
+                    DataInputStream dis = new DataInputStream(socket.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+                    dos.writeDouble(value1);
+                    dos.writeDouble(value2);
+                    dos.writeDouble(value3);
 
-                socket.close();
+                    double result = dis.readDouble();
+
+                    // Оновлення UI на JavaFX Application Thread
+                    Platform.runLater(() -> resultLabel.setText("Result: " + result));
+                    socket.close();
+                } catch (NumberFormatException e) {
+                    // Виведення попередження про некоректні дані
+                    Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
+                    Platform.runLater(() -> {
+                        resultLabel.setText("Please enter valid numbers");
+                        Xnum.clear();
+                        Ynum.clear();
+                        Cnum.clear();
+                    });
+                }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
+                Platform.runLater(() -> {
+                    resultLabel.setText("Please enter valid numbers");
+                    Xnum.clear();
+                    Ynum.clear();
+                    Cnum.clear();
+                });
             }
         }).start();
     }
+
+
 
     public static void main(String[] args) {
         launch(args);

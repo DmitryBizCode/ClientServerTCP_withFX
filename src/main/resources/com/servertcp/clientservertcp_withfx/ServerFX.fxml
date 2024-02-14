@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.servertcp.clientservertcp_withfx.ServerFX"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.servertcp.clientservertcp_withfx.ServerController">
+   <children>
+      <Label fx:id="Iterati" layoutX="14.0" layoutY="21.0" prefHeight="44.0" prefWidth="321.0" text="Server worked with 0 users">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableOfServerWork" layoutY="79.0" prefHeight="321.0" prefWidth="600.0">
+        <columns>
+            <TableColumn fx:id="ID" prefWidth="60.666627287864685" text="ID" />
+            <TableColumn fx:id="XS" prefWidth="92.00006484985352" text="X" />
+            <TableColumn fx:id="YS" prefWidth="102.66661071777344" text="Y" />
+          <TableColumn fx:id="CS" prefWidth="92.6666259765625" text="C" />
+          <TableColumn fx:id="Res" minWidth="0.0" prefWidth="252.00009155273438" text="Result" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

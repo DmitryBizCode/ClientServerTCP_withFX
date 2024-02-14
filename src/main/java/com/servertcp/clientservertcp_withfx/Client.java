@@ -33,20 +33,17 @@ public class Client extends Application {
         primaryStage.setTitle("Client!");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
     @FXML
     protected void calculate() {
         new Thread(() -> {
             try {
-
-                // Перевірка чи введені значення не порожні
+                //not empty
                 String xInput = Xnum.getText();
                 String yInput = Ynum.getText();
                 String cInput = Cnum.getText();
 
-                if (xInput.isEmpty() || yInput.isEmpty() || cInput.isEmpty()) {
-                    // Виведення попередження про порожні значення
+                if (Xnum.getText().isEmpty() || Ynum.getText().isEmpty() || Cnum.getText().isEmpty()) {
                     Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
                     Platform.runLater(() -> {
                         resultLabel.setText("Please enter valid numbers");
@@ -54,12 +51,10 @@ public class Client extends Application {
                         Ynum.clear();
                         Cnum.clear();
                     });
-                    return; // Вихід з методу, оскільки дані некоректні
+                    return;
                 }
-
-                // Перевірка чи введені значення є числами
                 try {
-
+                    //is numer
                     double value1 = Double.parseDouble(xInput);
                     double value2 = Double.parseDouble(yInput);
                     double value3 = Double.parseDouble(cInput);
@@ -73,11 +68,9 @@ public class Client extends Application {
 
                     double result = dis.readDouble();
 
-                    // Оновлення UI на JavaFX Application Thread
                     Platform.runLater(() -> resultLabel.setText("Result: " + result));
                     socket.close();
                 } catch (NumberFormatException e) {
-                    // Виведення попередження про некоректні дані
                     Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
                     Platform.runLater(() -> {
                         resultLabel.setText("Please enter valid numbers");

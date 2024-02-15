@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Arrays;
@@ -42,7 +43,12 @@ public class Server extends Application {
     private void startServer() {
         new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(12345);
+                //localhost server
+                //ServerSocket serverSocket = new ServerSocket(12345);
+
+
+                //my personal ip for server
+                ServerSocket serverSocket = new ServerSocket(12345,50, InetAddress.getByName("192.168.1.222"));
 
                 while (true) {
                     System.out.println("Waiting for client...");

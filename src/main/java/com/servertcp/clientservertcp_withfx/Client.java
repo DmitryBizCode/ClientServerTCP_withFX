@@ -54,12 +54,16 @@ public class Client extends Application {
                     return;
                 }
                 try {
-                    //is numer
+                    //is number
                     double value1 = Double.parseDouble(xInput);
                     double value2 = Double.parseDouble(yInput);
                     double value3 = Double.parseDouble(cInput);
 
-                    Socket socket = new Socket("localhost", 12345);
+                    //localhost server
+                    //Socket socket = new Socket("localhost", 12345);
+                    //personal ip for server
+                    Socket socket = new Socket("192.168.1.222", 12345);
+
                     DataInputStream dis = new DataInputStream(socket.getInputStream());
                     DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                     dos.writeDouble(value1);

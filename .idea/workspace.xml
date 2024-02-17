@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b6f0b656-dc57-4389-a698-ffbf5c2c4241" name="Changes" comment="final">
+    <list default="true" id="b6f0b656-dc57-4389-a698-ffbf5c2c4241" name="Changes" comment="add server and client on another device">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/servertcp/clientservertcp_withfx/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/servertcp/clientservertcp_withfx/ClientFX.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/servertcp/clientservertcp_withfx/ClientFX.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +32,20 @@
       </GitPushTagMode>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DmitryBizCode&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="ede62c4b-ef1b-4c14-8c23-bc42cc84f6db" />
+        <option name="url" value="https://github.com/DmitryBizCode/ClientServerTCP_withFX.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -93,7 +109,10 @@
       <workItem from="1707928296216" duration="18848000" />
       <workItem from="1707954107675" duration="422000" />
       <workItem from="1707954611099" duration="404000" />
-      <workItem from="1707989437843" duration="1423000" />
+      <workItem from="1707989437843" duration="1994000" />
+      <workItem from="1707997182491" duration="2127000" />
+      <workItem from="1708170912998" duration="6449000" />
+      <workItem from="1708192956686" duration="5322000" />
     </task>
     <task id="LOCAL-00001" summary="add necessary files to serv/client">
       <option name="closed" value="true" />
@@ -135,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707952903537</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add server and client on another device">
+      <option name="closed" value="true" />
+      <created>1707991358947</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1707991358947</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -147,7 +174,8 @@
     <MESSAGE value="client final set" />
     <MESSAGE value="stable client + correct math" />
     <MESSAGE value="final" />
-    <option name="LAST_COMMIT_MESSAGE" value="final" />
+    <MESSAGE value="add server and client on another device" />
+    <option name="LAST_COMMIT_MESSAGE" value="add server and client on another device" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -2,6 +2,7 @@ package com.servertcp.clientservertcp_withfx;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,12 @@ import javafx.stage.Stage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+
 public class Client extends Application {
     @FXML
     private TextField Xnum;
@@ -25,7 +31,15 @@ public class Client extends Application {
 
     @FXML
     private Label resultLabel;
-
+    @FXML
+    private CheckBox TCPUDP;
+    @FXML
+    private void TCPUDPConnectionCalculate(){
+        if(TCPUDP.isSelected())
+            calculateTCP();
+        else
+            calculateUDP();
+    }
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ClientFX.fxml"));
@@ -34,8 +48,8 @@ public class Client extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    @FXML
-    protected void calculate() {
+
+    protected void calculateTCP() {
         new Thread(() -> {
             try {
                 //not empty
@@ -60,9 +74,9 @@ public class Client extends Application {
                     double value3 = Double.parseDouble(cInput);
 
                     //localhost server
-                    //Socket socket = new Socket("localhost", 12345);
+                    Socket socket = new Socket("localhost", 12345);
                     //personal ip for server
-                    Socket socket = new Socket("192.168.1.222", 12345);
+                    //Socket socket = new Socket("192.168.1.222", 12345);
 
                     DataInputStream dis = new DataInputStream(socket.getInputStream());
                     DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
@@ -96,8 +110,57 @@ public class Client extends Application {
             }
         }).start();
     }
+    private void calculateUDP() {
+        new Thread(() -> {
+            try {
+                String xInput = Xnum.getText();
+                String yInput = Ynum.getText();
+                String cInput = Cnum.getText();
 
+                if (xInput.isEmpty() || yInput.isEmpty() || cInput.isEmpty()) {
+                    Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
+                    return;
+                }
 
+                try {
+                    double value1 = Double.parseDouble(xInput);
+                    double value2 = Double.parseDouble(yInput);
+                    double value3 = Double.parseDouble(cInput);
+
+                    InetAddress serverAddress = InetAddress.getByName("localhost");
+                    int serverPort = 12345;
+
+                    DatagramSocket socket = new DatagramSocket();
+
+                    // Send data to the server
+                    ByteBuffer buffer = ByteBuffer.allocate(24);
+                    buffer.putDouble(value1);
+                    buffer.putDouble(value2);
+                    buffer.putDouble(value3);
+
+                    byte[] sendData = buffer.array();
+                    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverAddress, serverPort);
+                    socket.send(sendPacket);
+
+                    // Receive result from the server
+                    byte[] receiveData = new byte[8];
+                    DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                    socket.receive(receivePacket);
+
+                    double result = ByteBuffer.wrap(receiveData).getDouble();
+
+                    Platform.runLater(() -> resultLabel.setText("Result: " + result));
+
+                    socket.close();
+                } catch (NumberFormatException e) {
+                    Platform.runLater(() -> resultLabel.setText("Please enter valid numbers"));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Platform.runLater(() -> resultLabel.setText("Error occurred"));
+            }
+        }).start();
+    }
 
     public static void main(String[] args) {
         launch(args);

@@ -14,12 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 import java.util.Arrays;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,17 +31,20 @@ public class Server extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ServerFX.fxml"));
         Parent root = loader.load();
         controller = loader.getController();
-        primaryStage.setTitle("Server TCP");
+        primaryStage.setTitle("Server");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        startServer();
+        //startServer();
+        startServerUDP();
+
     }
+
+    //TCP connection
     private void startServer() {
         new Thread(() -> {
             try {
                 //localhost server
                 //ServerSocket serverSocket = new ServerSocket(12345);
-
 
                 //my personal ip for server
                 ServerSocket serverSocket = new ServerSocket(12345,50, InetAddress.getByName("192.168.1.222"));
@@ -80,6 +79,55 @@ public class Server extends Application {
             }
         }).start();
     }
+
+    private void startServerUDP() {
+        new Thread(() -> {
+            try {
+                DatagramSocket serverSocket = new DatagramSocket(12345, InetAddress.getByName("localhost"));
+                //DatagramSocket serverSocket = new DatagramSocket(12345, InetAddress.getByName("192.168.1.222"));
+
+                while (true) {
+                    System.out.println("Waiting for client...");
+
+                    byte[] receiveData = new byte[1024];
+                    DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+
+                    serverSocket.receive(receivePacket);
+
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(receivePacket.getData());
+                    DataInputStream dis = new DataInputStream(byteArrayInputStream);
+                    System.out.println("Client connected");
+                    System.out.println(receivePacket.getAddress());
+                    double value1 = dis.readDouble();
+                    double value2 = dis.readDouble();
+                    double value3 = dis.readDouble();
+
+                    double result = CalculationTask(value1, value2, value3);
+
+                    ID++;
+                    Client_Data newData = new Client_Data(ID, value1, value2, value3, result);
+                    controller.addRow(newData);
+
+                    Platform.runLater(() -> {
+                        String idstr = Integer.toString(ID);
+                        controller.changeLabel("Server worked with " + idstr + " users");
+                    });
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    DataOutputStream dos = new DataOutputStream(byteArrayOutputStream);
+                    dos.writeDouble(result);
+
+                    DatagramPacket sendPacket = new DatagramPacket(byteArrayOutputStream.toByteArray(),
+                            byteArrayOutputStream.size(), receivePacket.getAddress(), receivePacket.getPort());
+                    serverSocket.send(sendPacket);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+    //UDP connection
     private double CalculationTask(double x, double y, double c) {
         double resault = 0;
         for (int i = 1; i <= 30 ; i++) {
@@ -103,7 +151,6 @@ public class Server extends Application {
             return -1;
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);

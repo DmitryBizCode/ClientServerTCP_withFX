@@ -34,9 +34,8 @@ public class Server extends Application {
         primaryStage.setTitle("Server");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        //startServer();
-        startServerUDP();
-
+        startServer();
+        //startServerUDP();
     }
 
     //TCP connection
@@ -44,10 +43,10 @@ public class Server extends Application {
         new Thread(() -> {
             try {
                 //localhost server
-                //ServerSocket serverSocket = new ServerSocket(12345);
+                ServerSocket serverSocket = new ServerSocket(12345);
 
                 //my personal ip for server
-                ServerSocket serverSocket = new ServerSocket(12345,50, InetAddress.getByName("192.168.1.222"));
+                //ServerSocket serverSocket = new ServerSocket(12345,50, InetAddress.getByName("192.168.1.222"));
 
                 while (true) {
                     System.out.println("Waiting for client...");
@@ -127,7 +126,6 @@ public class Server extends Application {
     }
 
 
-    //UDP connection
     private double CalculationTask(double x, double y, double c) {
         double resault = 0;
         for (int i = 1; i <= 30 ; i++) {

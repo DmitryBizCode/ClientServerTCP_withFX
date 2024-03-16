@@ -34,6 +34,10 @@ public class Client extends Application {
     @FXML
     private CheckBox TCPUDP;
     @FXML
+    private CheckBox Linear;
+    @FXML
+    private CheckBox EikhnauerLena;
+    @FXML
     private void TCPUDPConnectionCalculate(){
         if(TCPUDP.isSelected())
             calculateTCP();
@@ -52,6 +56,25 @@ public class Client extends Application {
     protected void calculateTCP() {
         new Thread(() -> {
             try {
+                if(Xnum.getText().isEmpty() && Ynum.getText().isEmpty() && Cnum.getText().isEmpty()){
+                    if(Linear.isSelected()) {
+                        // Параметри генератора
+                        long seed = 1; // початкове значення (сід)
+                        long a = 1664525; // множник
+                        long c = 1013904223; // приріст
+                        long m = 4294967296L; // модуль (2^32)
+                        LinearCongruentialGenerator linearG = new LinearCongruentialGenerator(seed, a, c, m);
+                        Xnum.setText(String.valueOf(linearG.generate()));
+                        Ynum.setText(String.valueOf(linearG.generate()));
+                        Cnum.setText(String.valueOf(linearG.generate()));
+                    }
+                    else if(EikhnauerLena.isSelected()) {
+                        EikhnauerLenaGenerator generator = new EikhnauerLenaGenerator(11, 7, 29);
+                        Xnum.setText(String.valueOf(generator.nextInt()));
+                        Ynum.setText(String.valueOf(generator.nextInt()));
+                        Cnum.setText(String.valueOf(generator.nextInt()));
+                    }
+                }
                 //not empty
                 String xInput = Xnum.getText();
                 String yInput = Ynum.getText();
@@ -102,6 +125,7 @@ public class Client extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
                 Platform.runLater(() -> {
+
                     resultLabel.setText("Please enter valid numbers");
                     Xnum.clear();
                     Ynum.clear();

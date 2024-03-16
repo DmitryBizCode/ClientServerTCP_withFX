@@ -56,7 +56,17 @@
             <Image url="@../../../img/imageforwork.png" />
          </image>
       </ImageView>
-      <CheckBox fx:id="TCPUDP" layoutX="480.0" layoutY="85.0" mnemonicParsing="false" text="TCP">
+      <CheckBox fx:id="TCPUDP" layoutX="437.0" layoutY="86.0" mnemonicParsing="false" text="TCP">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="Linear" layoutX="437.0" layoutY="122.0" mnemonicParsing="false" text="Linear">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </CheckBox>
+      <CheckBox fx:id="EikhnauerLena" layoutX="437.0" layoutY="163.0" mnemonicParsing="false" text="EikhnauerLena">
          <font>
             <Font size="15.0" />
          </font>
